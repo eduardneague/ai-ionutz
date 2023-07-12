@@ -2,7 +2,7 @@ import React from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
-
+// d
 const Header: React.FC = (): JSX.Element => {
   return (
     <>
@@ -28,7 +28,7 @@ const Header: React.FC = (): JSX.Element => {
             
             <div className="right-side flex items-center text-sm md:text-base divide-x text-gray-500">
                 <Link
-                        href = "https://github.com/eduardneague/ai-ionutz"
+                        href = "https://eduardneague.netlify.app"
                         target = "_blank"
                         className = "px-2 font-light text-right"
                     >

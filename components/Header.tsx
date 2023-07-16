@@ -2,7 +2,7 @@ import React from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
-// dddd
+// ddddd
 const Header: React.FC = (): JSX.Element => {
   return (
     <>

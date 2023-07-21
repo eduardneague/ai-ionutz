@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+"use client"
+
+import React, {useEffect} from 'react'
 import {bannerImages} from '../bannerImages'
 
 import Prompt from './Prompt'
 
 const Header: React.FC = (): JSX.Element => {
-
     const randomImage = bannerImages[Math.floor(Math.random() * bannerImages.length)].image_url
 
     const styles = {

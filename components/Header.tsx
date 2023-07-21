@@ -1,51 +1,59 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {bannerImages} from '../bannerImages'
 
-import Image from 'next/image'
-import Link from 'next/link'
-// ddddddddd
+import Prompt from './Prompt'
+
 const Header: React.FC = (): JSX.Element => {
-  return (
-    <>
-        <header className = "flex justify-between items-center w-full bg-white shadow-md z-50 sticky h-20 px-5"> 
-            <div className="left-side flex space-x-2 items-center">
-                <Image
-                    src = 'https://links.papareact.com/4t3'
-                    alt = 'IONUT-Z LOGO'
-                    height = {30}
-                    width = {30}
-                    draggable = "false"
-                    className = "aspect-square select-none"
-                />
-                <div className = "flex flex-col">
-                    <h1 className = "font-bold">
-                        IONUT-Z <span className = "text-purple-500">AI</span> Image Generator
-                    </h1>
-                    <h2 className = "text-xs">
-                        Powered by DALL-E 2, Chat GPT & Microsoft Azure
+
+    const randomImage = bannerImages[Math.floor(Math.random() * bannerImages.length)].image_url
+
+    const styles = {
+        backgroundImage: `url('${randomImage}')`
+    }
+
+    return (
+        <>
+            <div 
+                className = "w-full h-[28rem] bg-cover bg-bottom md:bg-center bg-no-repeat flex justify-center items-center" 
+                style = {styles}
+            >
+                <div className = "flex h-full w-[90%] flex-col py-7">
+                    <div className = "flex justify-between items-center">
+                        <h1 className = "text-xl bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-runwild-light-pink to-runwild-dark-pink">
+                            RUNWILD
+                        </h1>
+                        <h2 className = "text-sm text-white">
+                            GitHub Repo
+                        </h2>
+                    </div>
+                    <h2 className = "text-white text-xs">
+                        <span className = "text-white font-bold">
+                            DALL-E, ChatGPT, Microsoft Azure
+                        </span>
                     </h2>
+
+                    <div className = "flex flex-col items-center justify-center mt-10 mb-5">
+                        <h1 className = "text-2xl text-center text-white mb-4">
+                            Create anything your
+                            <br/>
+                            <span className = "font-bold">heart </span> 
+                            desires
+                        </h1>
+                        <h1 className = "text-2xl text-center text-white">
+                            Let your imagination
+                            <br/>
+                            <span className = "text-transparent bg-clip-text font-bold bg-gradient-to-r from-runwild-light-pink to-runwild-dark-pink">RUNWILD</span>
+                            <span className = "font-bold text-white">.</span>
+                        </h1>
+                    </div>
+                    
+                    <Prompt/>
+
                 </div>
             </div>
-            
-            <div className="right-side flex items-center text-sm md:text-base divide-x text-gray-500">
-                <Link
-                        href = "https://eduardneague.netlify.app"
-                        target = "_blank"
-                        className = "px-2 font-light text-right"
-                    >
-                    My Portfolio
-                </Link>
-                <Link
-                    href = "https://github.com/eduardneague/ai-ionutz"
-                    target = "_blank"
-                    className = "px-2 font-light text-right"
-                >
-                    GitHub Repo
-                </Link>
-            </div>
 
-        </header>
-    </>
-  )
+        </>
+    )
 }
 
 export default Header

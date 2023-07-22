@@ -20,7 +20,7 @@ const Propmt: React.FC = (): JSX.Element => {
      <>
       {
         windowWidth < 800 ? 
-        ( // Mobile Prompt (<800px width)
+        ( // Mobile Prompt (<800px width) d
           <>
             <div className = "flex flex-col gap-2">
               <label htmlFor = "prompt_input" className = "text-white text-sm">

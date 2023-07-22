@@ -2,7 +2,6 @@ import '../styles/globals.css'
 import '../styles/reset.css'
 
 import Header from '../components/Header'
-import Prompt from '../components/Prompt'
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -10,7 +9,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'IONUT-Z Ai Generator',
+  title: 'RUNWILD',
   description: 'Created by Neague Eduard.',
 }
 

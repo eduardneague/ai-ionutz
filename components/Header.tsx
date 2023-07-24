@@ -15,15 +15,15 @@ const Header: React.FC = (): JSX.Element => {
     return (
         <>
             <div 
-                className = "w-full h-[28rem] bg-cover bg-bottom md:bg-center bg-no-repeat flex justify-center items-center" 
+                className = "w-full h-[28rem] xl:h-[45rem] bg-cover bg-center xl:bg-top md:bg-center bg-no-repeat flex justify-center items-center" 
                 style = {styles}
             >
-                <div className = "flex h-full w-[90%] flex-col py-7">
+                <div className = "flex h-full w-[90%] xl:w-[70%] 2xl:w-[60%] flex-col justify-center">
                     <div className = "flex justify-between items-center">
-                        <h1 className = "text-xl bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-runwild-light-pink to-runwild-dark-pink">
+                        <h1 className = "text-xl xl:text-2xl bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-runwild-light-pink to-runwild-dark-pink">
                             RUNWILD
                         </h1>
-                        <h2 className = "text-sm text-white">
+                        <h2 className = "text-sm text-white xl:text-lg cursor-pointer hover:text-runwild-light-pink transition-all">
                             GitHub Repo
                         </h2>
                     </div>
@@ -33,19 +33,27 @@ const Header: React.FC = (): JSX.Element => {
                         </span>
                     </h2>
 
-                    <div className = "flex flex-col items-center justify-center mt-10 mb-5">
-                        <h1 className = "text-2xl text-center text-white mb-4">
-                            Create anything your
-                            <br/>
-                            <span className = "font-bold">heart </span> 
-                            desires
-                        </h1>
-                        <h1 className = "text-2xl text-center text-white">
-                            Let your imagination
-                            <br/>
-                            <span className = "text-transparent bg-clip-text font-bold bg-gradient-to-r from-runwild-light-pink to-runwild-dark-pink">RUNWILD</span>
-                            <span className = "font-bold text-white">.</span>
-                        </h1>
+                    <div className = "w-full xl:flex xl:items-center xl:justify-between">
+                        <div className = "flex flex-col items-center xl:items-start justify-center mt-10 xl:mt-[6rem] mb-5 xl:mb-[5rem]">
+                            <h1 className = "text-2xl text-center text-white mb-4 xl:text-5xl xl:text-left">
+                                Create anything your
+                                <br/>
+                                <span className = "font-bold xl:leading-[4rem] ">heart </span> 
+                                desires
+                            </h1>
+                            <h1 className = "text-2xl text-center text-white xl:text-left xl:text-5xl">
+                                Let your imagination
+                                <br/>
+                                <span className = "text-transparent xl:leading-[4rem] bg-clip-text font-bold bg-gradient-to-r from-runwild-light-pink to-runwild-dark-pink">RUNWILD</span>
+                                <span className = "font-bold text-white">.</span>
+                            </h1>
+                        </div>
+                        <img 
+                            src = "illustration.png" 
+                            alt = "Illustration" 
+                            className = "xl:block hidden object-contain h-[23rem] 2xl:h-[25rem] aspect-square select-none"
+                            draggable = {false}
+                        />
                     </div>
                     
                     <Prompt/>

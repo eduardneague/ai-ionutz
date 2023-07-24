@@ -1,20 +1,27 @@
 "use client"
+import fetchSuggestionFromChatGPT from '@/lib/fetchSuggestionFromChatGPT'
 import React, {useEffect, useState} from 'react'
+import useSWR from 'swr'
 
 const Propmt: React.FC = (): JSX.Element => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth) 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth) 
+    const [inputValue, setInputValue] = useState<string>('')
+
+    const {data: suggestion, isLoading, mutate, isValidating} = useSWR('/api/suggestion', fetchSuggestionFromChatGPT, {
+      revalidateOnFocus: false,
+    })
 
       useEffect(() => {
         const resizeWindow = () => {
             setWindowWidth(window.innerWidth)
         }
-
         window.addEventListener('resize', resizeWindow)
         return () => {
             window.removeEventListener('resize', resizeWindow)
         }
-
     }, [windowWidth])
+
+    const loading = isLoading || isValidating
 
     return (
      <>
@@ -27,22 +34,33 @@ const Propmt: React.FC = (): JSX.Element => {
                   Try it out!
               </label>
               <input 
+                value = {inputValue}
+                onChange = {(e) => setInputValue(e.target.value)}
                 type = "text"
                 id = "prompt_input"
-                placeholder = "A dog running through a sea of candy"
-                className = "bg-runwild-darker-gray text-white rounded-lg h-[3rem] px-3 focus:outline-none focus:outline-runwild-light-pink shadow-md"
+                placeholder = {loading ? " ChatGPT is thinking..." : typeof suggestion !== 'object' && typeof suggestion !== 'undefined' ? ` ${suggestion}` : " ChatGPT is not available. Try it yourself."}
+                className = "bg-runwild-darker-gray opacity-70 text-white rounded-lg h-[3rem] px-3 focus:outline-none focus:outline-runwild-light-pink shadow-md"
               />
             </div>
             <div className = "flex w-full h-[3rem] mt-[0.5rem] gap-2">
-              <button className = "shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-gray to-runwild-light-gray rounded-lg">
+              <button 
+                onClick = {mutate}
+                className = "new-suggestion-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-runwild-dark-purple text-xs bg-white rounded-lg"
+                >
                 New Suggestion
               </button>
-              <button className = "shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple rounded-lg">
+              <button className = "use-suggestion-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple rounded-lg">
                 Use Suggestion
               </button>
-              <button className = "shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-lg">
-                Generate
-              </button>
+              <button 
+                  disabled = {!inputValue}
+                  className = {inputValue ? 
+                    `generate-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-lg` 
+                    : 
+                    `generate-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-runwild-light-gray rounded-lg`}
+                    >
+                  Generate
+                </button>
             </div>
           </>
         ) : 
@@ -53,25 +71,46 @@ const Propmt: React.FC = (): JSX.Element => {
             </label>
             <div className = "max-w-[81rem] w-full relative self-center">
               <input 
+                value = {inputValue}
+                onChange = {(e) => setInputValue(e.target.value)}
                 type = "text"
                 id = "prompt_input"
-                placeholder = "A dog running through a sea of candy"
-                className = "bg-runwild-darker-gray w-full self-center text-white rounded-lg h-[3.3rem] pl-3 pr-[21.5rem] focus:outline-none focus:outline-runwild-light-pink shadow-md"
+                placeholder = {loading ? " ChatGPT is thinking..." : typeof suggestion !== 'object' && typeof suggestion !== 'undefined' ? ` ${suggestion}` : " ChatGPT is not available. Try it yourself."}
+                className = "bg-runwild-darker-gray w-full opacity-70 self-center text-white rounded-lg h-[3.3rem] pl-3 pr-[21.5rem] xl:pr-[24rem] focus:outline-none focus:outline-runwild-light-pink shadow-md"
               />
               <div className = "absolute bottom-[0%] right-0 flex mt-[0.5rem]">
-                <button className = "shadow-md h-[3.3rem] px-2 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-gray to-runwild-light-gray">
+                <button 
+                    onClick = {mutate}
+                    className = "new-suggestion-button shadow-md h-[3.3rem] px-2 xl:px-3 sm:text-sm justify-center items-center flex text-runwild-dark-purple text-xs bg-white"
+                  >
                   New Suggestion
                 </button>
-                <button className = "shadow-md h-[3.3rem] px-2 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple">
+                <button className = "use-suggestion-button shadow-md h-[3.3rem] px-2 xl:px-3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple">
                   Use Suggestion
                 </button>
-                <button className = "shadow-md h-[3.3rem] px-2 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-tr-lg rounded-br-lg">
+                <button 
+                  disabled = {!inputValue}
+                  className = {inputValue ? 
+                    `generate-button shadow-md h-[3.3rem] px-2 xl:px-5 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-tr-lg rounded-br-lg` 
+                    : 
+                    `shadow-md h-[3.3rem] px-2 xl:px-5 sm:text-sm justify-center items-center flex text-white text-xs bg-runwild-light-gray rounded-tr-lg rounded-br-lg`}
+                    >
                   Generate
                 </button>
               </div>
             </div>
             
         </div>
+        )
+      }
+      {
+        inputValue && (
+          <p className = "font-bold text-runwild-light-pink text-sm absolute bottom-0 md:bottom-[2%] max-w-[40rem] left-0 right-0 m-auto bg-runwild-dark-purple shadow shadow-runwild-dark-purple md:rounded-lg p-3">
+            ChatGPT Suggestion: 
+            <span className = "font-normal text-sm text-white"> 
+              {loading ? " ChatGPT is thinking..." : typeof suggestion !== 'object' && typeof suggestion !== 'undefined' ? ` ${suggestion}` : " ChatGPT is not available."}
+            </span>
+          </p>
         )
       }
      </>

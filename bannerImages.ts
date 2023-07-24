@@ -16,10 +16,6 @@ export const bannerImages = [
         iamge_alt: 'RUNWILD Banner Image', 
     },
     {
-        image_url: 'bg_5-min.jpg',
-        iamge_alt: 'RUNWILD Banner Image', 
-    },
-    {
         image_url: 'bg_6-min.jpg',
         iamge_alt: 'RUNWILD Banner Image', 
     },
@@ -29,10 +25,6 @@ export const bannerImages = [
     },
     {
         image_url: 'bg_9-min.jpg',
-        iamge_alt: 'RUNWILD Banner Image', 
-    },
-    {
-        image_url: 'bg_10-min.jpg',
         iamge_alt: 'RUNWILD Banner Image', 
     },
     {

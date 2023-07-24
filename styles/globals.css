@@ -2,3 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.new-suggestion-button:hover {
+    transition: all .2s;
+    transition-timing-function: ease-out;
+    box-shadow: 0 0 20px 3px rgb(197, 197, 197);
+}
+
+.use-suggestion-button:hover {
+    transition: all .2s;
+    transition-timing-function: ease-out;
+    box-shadow: 0 0 20px 3px #2D0B38;
+}
+
+.generate-button:hover {
+    transition: all .2s;
+    transition-timing-function: ease-out;
+    box-shadow: 0 0 20px 3px #FC52FF;
+}

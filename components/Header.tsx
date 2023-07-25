@@ -4,7 +4,6 @@ import React, {useEffect} from 'react'
 import {bannerImages} from '../bannerImages'
 
 import Link from "next/link"
-
 import Prompt from './Prompt'
 
 const Header: React.FC = (): JSX.Element => {

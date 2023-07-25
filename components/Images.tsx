@@ -22,8 +22,6 @@ const Images: React.FC = (): JSX.Element => {
         revalidateOnFocus: false
     })
 
-    console.log(images)
-
     return (
         <div className = "flex flex-col items-center">
         <div className = "flex flex-col">    

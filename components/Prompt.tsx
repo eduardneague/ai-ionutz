@@ -2,6 +2,8 @@
 import fetchSuggestionFromChatGPT from '@/lib/fetchSuggestionFromChatGPT'
 import React, {useEffect, useState} from 'react'
 import useSWR from 'swr'
+import fetchImages from '../lib/fetchImages'
+import toast from 'react-hot-toast'
 
 const Propmt: React.FC = (): JSX.Element => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth) 
@@ -22,6 +24,54 @@ const Propmt: React.FC = (): JSX.Element => {
     }, [windowWidth])
 
     const loading = isLoading || isValidating
+
+    const submitPrompt = async (useSuggestion?: boolean) => {
+      const inputPrompt = inputValue;
+      setInputValue("")
+
+      // p is prompt to send to api endpoint
+
+      const p = useSuggestion ? suggestion : inputPrompt 
+
+      // hot toast notification
+
+      const notificationPrompt = p 
+      const notificationPromptShort = notificationPrompt.slice(0, 20)
+
+      const notification = toast.loading(
+        `RUNWILD is creating: ${notificationPromptShort}...`
+      )
+
+      const res = await fetch("api/generateImage", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({prompt: p})
+      })
+      const data = await res.json()
+
+      if(data.error) {
+        toast.error(data.error, {
+          id: notification
+        })
+      } else {
+        toast.success("Your AI Image has been generated!", {
+          id: notification
+        })
+      }
+
+      updateImages()
+    }
+
+    const handleSubmit = async (event: any) => {
+      event.preventDefault()
+      await submitPrompt()
+    }
+
+    const {mutate: updateImages} = useSWR("images", fetchImages, {
+      revalidateOnFocus: false
+    })
 
     return (
      <>
@@ -49,10 +99,14 @@ const Propmt: React.FC = (): JSX.Element => {
                 >
                 New Suggestion
               </button>
-              <button className = "use-suggestion-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple rounded-lg">
+              <button 
+                onClick = {() => {submitPrompt(true);}}
+                className = "use-suggestion-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple rounded-lg"
+                >
                 Use Suggestion
               </button>
               <button 
+                  onClick = {(e) => {handleSubmit(e);}}
                   disabled = {!inputValue}
                   className = {inputValue ? 
                     `generate-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-lg` 
@@ -64,6 +118,7 @@ const Propmt: React.FC = (): JSX.Element => {
             </div>
           </>
         ) : 
+        
         ( // Desktop Prompt
           <div className = "flex flex-col gap-2">
             <label htmlFor = "prompt_input" className = "text-white text-lg">
@@ -85,10 +140,14 @@ const Propmt: React.FC = (): JSX.Element => {
                   >
                   New Suggestion
                 </button>
-                <button className = "use-suggestion-button shadow-md h-[3.3rem] px-2 xl:px-3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple">
-                  Use Suggestion
-                </button>
                 <button 
+                    onClick = {() => {submitPrompt(true);}}
+                    className = "use-suggestion-button shadow-md h-[3.3rem] px-2 xl:px-3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple"
+                >
+                  Use Suggestion
+                </button> 
+                <button
+                  onClick = {(e) => {handleSubmit(e);}}
                   disabled = {!inputValue}
                   className = {inputValue ? 
                     `generate-button shadow-md h-[3.3rem] px-2 xl:px-5 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-tr-lg rounded-br-lg` 
@@ -105,7 +164,7 @@ const Propmt: React.FC = (): JSX.Element => {
       }
       {
         inputValue && (
-          <p className = "font-bold text-runwild-light-pink text-sm absolute bottom-0 md:bottom-[2%] max-w-[40rem] left-0 right-0 m-auto bg-runwild-dark-purple shadow shadow-runwild-dark-purple md:rounded-lg p-3">
+          <p className = "font-bold text-runwild-light-pink text-sm fixed bottom-0 z-[1000] md:bottom-[2%] max-w-[40rem] left-0 right-0 m-auto bg-runwild-dark-purple shadow shadow-runwild-dark-purple md:rounded-lg p-3">
             ChatGPT Suggestion: 
             <span className = "font-normal text-sm text-white"> 
               {loading ? " ChatGPT is thinking..." : typeof suggestion !== 'object' && typeof suggestion !== 'undefined' ? ` ${suggestion}` : " ChatGPT is not available."}

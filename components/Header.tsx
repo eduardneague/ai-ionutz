@@ -3,6 +3,8 @@
 import React, {useEffect} from 'react'
 import {bannerImages} from '../bannerImages'
 
+import Link from "next/link"
+
 import Prompt from './Prompt'
 
 const Header: React.FC = (): JSX.Element => {
@@ -23,9 +25,9 @@ const Header: React.FC = (): JSX.Element => {
                         <h1 className = "text-xl xl:text-2xl bg-clip-text text-transparent font-extrabold bg-gradient-to-r from-runwild-light-pink to-runwild-dark-pink">
                             RUNWILD
                         </h1>
-                        <h2 className = "text-sm text-white xl:text-lg cursor-pointer hover:text-runwild-light-pink transition-all">
+                        <Link href = "https://github.com/eduardneague/ai-ionutz" target = "_blank" className = "text-sm text-white xl:text-lg cursor-pointer hover:text-runwild-light-pink transition-all">
                             GitHub Repo
-                        </h2>
+                        </Link>
                     </div>
                     <h2 className = "text-white text-xs">
                         <span className = "text-white font-bold">

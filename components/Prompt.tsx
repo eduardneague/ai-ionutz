@@ -6,23 +6,11 @@ import fetchImages from '../lib/fetchImages'
 import toast from 'react-hot-toast'
 
 const Propmt: React.FC = (): JSX.Element => {
-    const [windowWidth, setWindowWidth] = useState<any>() 
     const [inputValue, setInputValue] = useState<string>('')
 
     const {data: suggestion, isLoading, mutate, isValidating} = useSWR('/api/suggestion', fetchSuggestionFromChatGPT, {
       revalidateOnFocus: false,
     })
-
-      useEffect(() => {
-        const resizeWindow = () => {
-            setWindowWidth(window.innerWidth)
-        }
-        window.addEventListener('resize', resizeWindow)
-        return () => {
-            window.removeEventListener('resize', resizeWindow)
-        }
-    }, [windowWidth])
-
     const loading = isLoading || isValidating
 
     const submitPrompt = async (useSuggestion?: boolean) => {
@@ -75,9 +63,6 @@ const Propmt: React.FC = (): JSX.Element => {
 
     return (
      <>
-      {
-        windowWidth < 800 ? 
-        ( // Mobile Prompt (<800px width) dd
           <>
             <div className = "flex flex-col gap-2">
               <label htmlFor = "prompt_input" className = "text-white text-sm">
@@ -117,51 +102,6 @@ const Propmt: React.FC = (): JSX.Element => {
                 </button>
             </div>
           </>
-        ) : 
-        
-        ( // Desktop Prompt
-          <div className = "flex flex-col gap-2">
-            <label htmlFor = "prompt_input" className = "text-white text-lg">
-                Try it out!
-            </label>
-            <div className = "max-w-[81rem] w-full relative self-center">
-              <input 
-                value = {inputValue}
-                onChange = {(e) => setInputValue(e.target.value)}
-                type = "text"
-                id = "prompt_input"
-                placeholder = {loading ? " ChatGPT is thinking..." : typeof suggestion !== 'object' && typeof suggestion !== 'undefined' ? ` ${suggestion}` : " ChatGPT is not available. Try it yourself."}
-                className = "bg-runwild-darker-gray w-full opacity-70 self-center text-white rounded-lg h-[3.3rem] pl-3 pr-[21.5rem] xl:pr-[24rem] focus:outline-none focus:outline-runwild-light-pink shadow-md"
-              />
-              <div className = "absolute bottom-[0%] right-0 flex mt-[0.5rem]">
-                <button 
-                    onClick = {mutate}
-                    className = "new-suggestion-button shadow-md h-[3.3rem] px-2 xl:px-3 sm:text-sm justify-center items-center flex text-runwild-dark-purple text-xs bg-white"
-                  >
-                  New Suggestion
-                </button>
-                <button 
-                    onClick = {() => {submitPrompt(true);}}
-                    className = "use-suggestion-button shadow-md h-[3.3rem] px-2 xl:px-3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-purple to-runwild-light-purple"
-                >
-                  Use Suggestion
-                </button> 
-                <button
-                  onClick = {(e) => {handleSubmit(e);}}
-                  disabled = {!inputValue}
-                  className = {inputValue ? 
-                    `generate-button shadow-md h-[3.3rem] px-2 xl:px-5 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-tr-lg rounded-br-lg` 
-                    : 
-                    `shadow-md h-[3.3rem] px-2 xl:px-5 sm:text-sm justify-center items-center flex text-white text-xs bg-runwild-light-gray rounded-tr-lg rounded-br-lg`}
-                    >
-                  Generate
-                </button>
-              </div>
-            </div>
-            
-        </div>
-        )
-      }
       {
         inputValue && (
           <p className = "font-bold text-runwild-light-pink text-sm fixed bottom-0 z-[1000] md:bottom-[2%] max-w-[40rem] left-0 right-0 m-auto bg-runwild-dark-purple shadow shadow-runwild-dark-purple md:rounded-lg p-3">

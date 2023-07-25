@@ -4,6 +4,9 @@ import React from 'react'
 import useSWR from 'swr'
 import fetchImages from '../lib/fetchImages'
 
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import 'react-lazy-load-image-component/src/effects/blur.css'
+
 type ImageType = {
     name: string;
     url: string;
@@ -57,13 +60,14 @@ const Images: React.FC = (): JSX.Element => {
                                     {image.name.split("_").shift()?.toString().split(".").shift()}
                                 </p>
                             </div>
-                            <img
+                            <div>
+                            <LazyLoadImage
                                 src = {image.url}
                                 alt = {image.name}
-                                height = {800}
-                                width = {800}
-                                className = "w-full rounded-md shadow-2xl drop-shadow-lg -z-10"
+                                effect = "blur"
+                                className = "w-full h-full rounded-md shadow-2xl drop-shadow-lg -z-10"
                             />
+                            </div>
                         </div>
                     )
                 })}

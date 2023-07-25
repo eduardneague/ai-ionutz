@@ -1,6 +1,6 @@
 export async function GET(request: Request) {
     // Connect Azure Function endpoint
-    const response = await fetch('http://localhost:7071/api/getChatGPTSuggestion', {
+    const response = await fetch('https://runwild-generator.azurewebsites.net/api/getchatgptsuggestion', {
         cache: 'no-store',
     })
 

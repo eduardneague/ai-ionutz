@@ -6,7 +6,7 @@ import fetchImages from '../lib/fetchImages'
 import toast from 'react-hot-toast'
 
 const Propmt: React.FC = (): JSX.Element => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth) 
+    const [windowWidth, setWindowWidth] = useState<number>() 
     const [inputValue, setInputValue] = useState<string>('')
 
     const {data: suggestion, isLoading, mutate, isValidating} = useSWR('/api/suggestion', fetchSuggestionFromChatGPT, {

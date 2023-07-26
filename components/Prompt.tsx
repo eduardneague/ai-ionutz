@@ -96,7 +96,7 @@ const Propmt: React.FC = (): JSX.Element => {
                   className = {inputValue ? 
                     `generate-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-gradient-to-r from-runwild-dark-pink to-runwild-light-pink rounded-lg` 
                     : 
-                    `generate-button shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-runwild-light-gray rounded-lg`}
+                    `shadow-md w-1/3 sm:text-sm justify-center items-center flex text-white text-xs bg-runwild-light-gray rounded-lg`}
                     >
                   Generate
                 </button>

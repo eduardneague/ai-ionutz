@@ -5,7 +5,7 @@ import {bannerImages} from '../bannerImages'
 
 import Link from "next/link"
 import Prompt from './Prompt'
-//d
+//dd
 const Header: React.FC = (): JSX.Element => {
     const randomImage = bannerImages[Math.floor(Math.random() * bannerImages.length)].image_url
 
